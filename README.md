@@ -27,7 +27,7 @@ Source content is in `dist/data.js`; interactions are in `dist/app.js`. The deci
 
 ## Hosting
 
-GitHub Pages serves the root of the `gh-pages` branch. The publishing branch contains only the static files from `dist/`, including `.nojekyll`. The custom Actions workflow is disabled because its initial deployment remained queued during degraded GitHub Actions service.
+GitHub Pages deploys `dist/` through `.github/workflows/pages.yml` on pushes to `main`. The workflow uses `ubuntu-24.04-arm`: this runner successfully deployed while the standard runner pool was delayed during a GitHub Actions incident. The Pages build source is GitHub Actions. The earlier `gh-pages` branch is retained but is no longer the publishing source.
 
 After updating and checking `dist/`, publish from the repository checkout:
 
@@ -35,11 +35,8 @@ After updating and checking `dist/`, publish from the repository checkout:
 git add dist
 git commit -m "Update website"
 git push origin main
-git subtree split --prefix dist -b pages-release
-git push origin pages-release:gh-pages
-git branch -D pages-release
 ```
 
-In repository Settings → Pages, the build source is Deploy from a branch: `gh-pages`, root directory. GitHub still manages the Pages build and deployment; verify its successful result and live URL after publishing.
+Check the workflow result and live URL after publishing.
 
 For future research updates, review relevant primary sources, update dates, and preserve the distinction between documented systems and hypotheses. Do not assert an undisclosed internal Chase architecture.
